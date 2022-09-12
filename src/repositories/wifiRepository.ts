@@ -7,3 +7,18 @@ export async function insertWifi(userId: number, wifi: CreateWifiData){
         data: {...wifi, userId}
     });
 }
+
+export async function findAllWifisByUserID(userId: number){
+    return prisma.wifi.findMany({
+        where: {userId}
+    });
+}
+
+export async function findWifiByIdAndUserId(userId: number, wifiId: number){
+    return prisma.wifi.findFirst({
+        where: {
+            userId, 
+            id: wifiId
+        }
+    });
+}

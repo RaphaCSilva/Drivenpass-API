@@ -14,3 +14,22 @@ export async function createWifi(user: User, wifi: CreateWifiData){
     const wifiData = {...wifi, password: cryptr.encrypt(password)};
     await wifiRepository.insertWifi(user.id, wifiData);
 }
+
+export async function getWifis(userId: number){
+    const wifis = await wifiRepository.findAllWifisByUserID(userId);
+    
+    wifis.forEach(wifi => {
+        wifi.password = cryptr.decrypt(wifi.password)
+    });
+    return wifis
+}
+
+export async function getSpecificWifi(userId: number, wifiId: number){
+    const wifi = await wifiRepository.findWifiByIdAndUserId(userId, wifiId);
+    if(!wifi){
+        throw {type: "not_found", message: "Not found a wifi for this id"};
+    }
+
+    return {...wifi, password: cryptr.decrypt(wifi.password)};
+
+}
