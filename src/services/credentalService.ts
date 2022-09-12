@@ -37,3 +37,15 @@ export async function getSpecificCredential(userId: number, credentialId: number
     return {...credential, password: cryptr.decrypt(credential.password)};
 
 }
+
+export async function deleteCredential(user: User, credentialId: number){
+    const credential = await getSpecificCredential(user.id, credentialId);
+    validateCredential(credential.userId, user.id);
+    await credentialRepository.deleteCredential(credentialId);
+}
+
+function validateCredential(credentialUserid: number, userId: number){
+    if(credentialUserid !== userId){
+        throw { type: "unauthorized", message: "This credential is not yours"};
+    }
+}

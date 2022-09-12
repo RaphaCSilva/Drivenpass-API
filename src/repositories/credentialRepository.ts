@@ -30,3 +30,7 @@ export async function findCredentialByIdAndUserId(userId: number, credentialId: 
         }
     });
 }
+
+export async function deleteCredential(id: number){
+    return prisma.credential.delete({ where: {id} });
+}
