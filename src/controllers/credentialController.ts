@@ -3,7 +3,10 @@ import * as credentalService from "../services/credentalService.js";
 
 export async function createCredential(req: Request, res: Response) {
     const { user } = res.locals;
-    res.status(201).send(user);
+    const credential = req.body;
+    await credentalService.createCredential(user, credential);
+    
+    res.status(201);
 }
 
 export async function getCredentials(req: Request, res: Response) {
@@ -14,7 +17,14 @@ export async function getCredentials(req: Request, res: Response) {
 }
 
 export async function getCredential(req: Request, res: Response) {
-    
+    const { user } = res.locals;
+    const credentialId = parseInt(req.params.id);
+    if(credentialId === NaN){
+        res.sendStatus(422);
+    }
+
+    const credential = await credentalService.getSpecificCredential(user.id, credentialId);
+    res.status(200).send(credential);
 }
 
 export async function deleteCredential(req: Request, res: Response){
