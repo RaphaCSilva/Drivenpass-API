@@ -27,3 +27,14 @@ export async function getCard(req: Request, res: Response) {
     const card = await cardService.getSpecificCard(user.id, cardId);
     res.status(200).send(card);
 }
+
+export async function deleteCard(req: Request, res: Response){
+    const { user } = res.locals;
+    const cardId = parseInt(req.params.id);
+    if(cardId === NaN){
+        res.sendStatus(422);
+    }
+
+    await cardService.deleteCard(user, cardId);
+    res.sendStatus(200);
+}

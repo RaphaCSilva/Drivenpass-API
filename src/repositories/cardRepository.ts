@@ -30,3 +30,7 @@ export async function findCardByIdAndUserId(userId: number, cardId: number){
         }
     });
 }
+
+export async function deleteCard(id: number){
+    return prisma.card.delete({ where: {id} });
+}

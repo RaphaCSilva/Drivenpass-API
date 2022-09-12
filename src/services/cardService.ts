@@ -37,3 +37,16 @@ export async function getSpecificCard(userId: number, cardId: number){
 
     return {...card, password: cryptr.decrypt(card.password), cvc: cryptr.decrypt(card.cvc)};
 }
+
+export async function deleteCard(user: User, cardId: number){
+    const card = await getSpecificCard(user.id, cardId);
+    validateCard(card.userId, user.id);
+    
+    await cardRepository.deleteCard(cardId);
+}
+
+function validateCard(cardUserid: number, userId: number){
+    if(cardUserid !== userId){
+        throw { type: "unauthorized", message: "This card is not yours"};
+    }
+}

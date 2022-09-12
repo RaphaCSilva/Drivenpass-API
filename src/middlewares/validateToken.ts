@@ -21,7 +21,6 @@ export async function validateToken( req: Request, res: Response, next: NextFunc
         
         const { userId } = jwt.verify(token, process.env.JWT_SECRET) as { userId: number };
         const user = await getUserById(userId);
-        console.log(user);
         res.locals.user = user;
         next();
 
