@@ -15,3 +15,18 @@ export async function insertCard(userId: number, card: CreateCardData){
         data: {... card, userId}
     });
 }
+
+export async function findAllCardsByUserID(userId: number){
+    return prisma.card.findMany({
+        where: {userId}
+    });
+}
+
+export async function findCardByIdAndUserId(userId: number, cardId: number){
+    return prisma.card.findFirst({
+        where: {
+            userId, 
+            id: cardId
+        }
+    });
+}
