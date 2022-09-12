@@ -33,3 +33,16 @@ export async function getSpecificWifi(userId: number, wifiId: number){
     return {...wifi, password: cryptr.decrypt(wifi.password)};
 
 }
+
+export async function deleteWifi(user: User, wifiId: number){
+    const wifi = await getSpecificWifi(user.id, wifiId);
+    validateWifi(wifi.userId, user.id);
+    
+    await wifiRepository.deleteWifi(wifiId);
+}
+
+function validateWifi(wifiUserid: number, userId: number){
+    if(wifiUserid !== userId){
+        throw { type: "unauthorized", message: "This wifi is not yours"};
+    }
+}

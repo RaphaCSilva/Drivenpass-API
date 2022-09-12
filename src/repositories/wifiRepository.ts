@@ -22,3 +22,7 @@ export async function findWifiByIdAndUserId(userId: number, wifiId: number){
         }
     });
 }
+
+export async function deleteWifi(id: number){
+    return prisma.wifi.delete({ where: {id} });
+}
