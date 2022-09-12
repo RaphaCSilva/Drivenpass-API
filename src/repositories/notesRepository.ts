@@ -16,3 +16,18 @@ export async function insertNote(userId: number, note: CreateNoteData){
         data: {...note, userId}
     });
 }
+
+export async function findAllNotesByUserID(userId: number){
+    return prisma.note.findMany({
+        where: {userId}
+    });
+}
+
+export async function findNoteByIdAndUserId(userId: number, noteId: number){
+    return prisma.note.findFirst({
+        where: {
+            userId, 
+            id: noteId
+        }
+    });
+}
