@@ -31,3 +31,7 @@ export async function findNoteByIdAndUserId(userId: number, noteId: number){
         }
     });
 }
+
+export async function deleteNote(id: number){
+    return prisma.note.delete({ where: {id} });
+}

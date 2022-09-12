@@ -28,5 +28,12 @@ export async function getNote(req: Request, res: Response) {
 }
 
 export async function deleteNote(req: Request, res: Response) {
-    
+    const { user } = res.locals;
+    const noteId = parseInt(req.params.id);
+    if(noteId === NaN){
+        res.sendStatus(422);
+    }
+
+    await notesService.deleteNote(user, noteId);
+    res.sendStatus(200);
 }

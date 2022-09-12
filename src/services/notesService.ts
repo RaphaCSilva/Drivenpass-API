@@ -26,3 +26,16 @@ export async function getSpecificNote(userId: number, noteId: number){
 
     return note;
 }
+
+export async function deleteNote(user: User, noteId: number){
+    const note = await getSpecificNote(user.id, noteId);
+    validateNote(note.userId, user.id);
+    
+    await notesRepository.deleteNote(noteId);
+}
+
+function validateNote(noteUserId: number, userId: number){
+    if(noteUserId !== userId){
+        throw { type: "unauthorized", message: "This note is not yours"};
+    }
+}
