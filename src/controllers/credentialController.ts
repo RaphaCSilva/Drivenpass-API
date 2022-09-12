@@ -6,7 +6,7 @@ export async function createCredential(req: Request, res: Response) {
     const credential = req.body;
     await credentalService.createCredential(user, credential);
     
-    res.status(201);
+    res.sendStatus(201);
 }
 
 export async function getCredentials(req: Request, res: Response) {
