@@ -9,5 +9,7 @@ export async function createUser(req: Request, res: Response) {
 }
 
 export async function login(req: Request, res: Response) {
-    
+    const user = req.body;
+    const token = await userService.login(user);
+    res.status(200).send(token);
 }
