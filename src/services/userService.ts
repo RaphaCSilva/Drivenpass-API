@@ -27,6 +27,14 @@ export async function login(user: CreateUserData) {
     return token;
 }
 
+export async function getUserById(id: number){
+    const user = await userRepository.findUserById(id);
+    if(!user){
+        throw {type: "not_found", message: "No user found for this id"};
+    }
+    return user;
+}
+
 async function verifyEmailAlreadyRegistered(email: string) {
     const emailRegistered = await userRepository.findUserByEmail(email);
     if(emailRegistered){
