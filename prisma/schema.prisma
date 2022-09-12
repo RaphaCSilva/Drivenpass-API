@@ -16,6 +16,9 @@ model User {
   password    String 
   
   credentials Credential[]
+  notes Note[]
+  cards Card[]
+  wifis Wifi[]
 }
 
 model Credential {
@@ -27,6 +30,46 @@ model Credential {
   password    String
 
   user        User   @relation(fields:[userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+model Note {
+  id     Int @id @default(autoincrement())
+  userId Int
+  title  String
+  note   String
+  
+  user   User @relation(fields:[userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+model Card {
+  id              Int   @id @default(autoincrement())
+  userId          Int
+  title           String
+  number          String
+  name            String
+  cvc             String
+  expirationDate  String
+  password        String
+  type            String
+  isVirtual       Boolean
+  
+  user            User @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+}
+
+model Wifi {
+  id       Int @id @default(autoincrement())
+  userId   Int
+  title    String
+  name     String
+  password String
+           
+  user     User @relation(fields: [userId], references: [id])
 
   @@unique([userId, title])
 }
