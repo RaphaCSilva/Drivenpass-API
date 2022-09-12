@@ -70,6 +70,4 @@ model Wifi {
   password String
            
   user     User @relation(fields: [userId], references: [id])
-
-  @@unique([userId, title])
 }
